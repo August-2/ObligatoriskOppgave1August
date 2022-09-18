@@ -5,6 +5,7 @@ using Moq;
 using ObligatoriskOppgave1August.Controllers;
 using ObligatoriskOppgave1August.Models;
 using ObligatoriskOppgave1August.Models.Entities;
+using ObligatoriskOppgave1August.Models.ViewModels;
 
 namespace ProductUnitTest
 {
@@ -21,11 +22,45 @@ namespace ProductUnitTest
             _repository = new Mock<IProductRepository>();
 
             List<Product> fakeProducts = new List<Product>{
-                new Product {Name="Hammer", Price=121.50m, Category="Verktøy"},
-                new Product {Name="Vinkelsliper", Price=1520.00m, Category ="Verktøy"},
-                new Product {Name="Melk", Price=14.50m, Category ="Dagligvarer"},
-                new Product {Name="Kjøttkaker", Price=32.00m, Category ="Dagligvarer"},
-                new Product {Name="Brød", Price=25.50m, Category ="Dagligvarer"}
+                new Product {
+                    ProductId = 1,
+                    Name = "Hammer",
+                    Price = 121.50m,
+                    CategoryId = 1,
+                    ManufacturerId = 1
+
+                },
+                new Product {
+                    ProductId = 2,
+                    Name = "Vinkelsliper",
+                    Price = 1520.00m,
+                    CategoryId = 1,
+                    ManufacturerId = 1
+
+                },
+                new Product {
+                    ProductId = 3,
+                    Name = "Melk",
+                    Price = 43.00m,
+                    CategoryId = 3,
+                    ManufacturerId = 2
+
+                },
+                new Product {
+                    ProductId = 4,
+                    Name = "Kjøttkaker",
+                    Price = 17.00m,
+                    CategoryId = 3,
+                    ManufacturerId = 2
+
+                },
+                new Product
+                {
+                    Name="Brød",
+                    Price=25.50m,
+                    CategoryId = 3,
+                    ManufacturerId = 1
+                }
             }; _repository.Setup(x => x.GetAll()).Returns(fakeProducts);
             var controller = new ProductController(_repository.Object);
 
@@ -47,11 +82,45 @@ namespace ProductUnitTest
             _repository = new Mock<IProductRepository>();
 
             List<Product> fakeProducts = new List<Product>{
-                new Product {Name="Hammer", Price=121.50m, Category="Verktøy"},
-                new Product {Name="Vinkelsliper", Price=1520.00m, Category ="Verktøy"},
-                new Product {Name="Melk", Price=14.50m, Category ="Dagligvarer"},
-                new Product {Name="Kjøttkaker", Price=32.00m, Category ="Dagligvarer"},
-                new Product {Name="Brød", Price=25.50m, Category ="Dagligvarer"}
+                new Product {
+                    ProductId = 1,
+                    Name = "Hammer",
+                    Price = 121.50m,
+                    CategoryId = 1,
+                    ManufacturerId = 1
+
+                },
+                new Product {
+                    ProductId = 2,
+                    Name = "Vinkelsliper",
+                    Price = 1520.00m,
+                    CategoryId = 1,
+                    ManufacturerId = 1
+
+                },
+                new Product {
+                    ProductId = 3,
+                    Name = "Melk",
+                    Price = 43.00m,
+                    CategoryId = 3,
+                    ManufacturerId = 2
+
+                },
+                new Product {
+                    ProductId = 4,
+                    Name = "Kjøttkaker",
+                    Price = 17.00m,
+                    CategoryId = 3,
+                    ManufacturerId = 2
+
+                },
+                new Product
+                {
+                    Name="Brød",
+                    Price=25.50m,
+                    CategoryId = 3,
+                    ManufacturerId = 1
+                }
             }; _repository.Setup(x => x.GetAll()).Returns(fakeProducts);
             var controller = new ProductController(_repository.Object);
 
@@ -69,9 +138,11 @@ namespace ProductUnitTest
         [TestMethod]
         public void SaveIsCalledWhenProductIsCreated()
         {
+
             // Arrange 
             _repository = new Mock<IProductRepository>();
             _repository.Setup(x => x.Save(It.IsAny<Product>()));
+
             var controller = new ProductController(_repository.Object);
 
             // Act 

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ObligatoriskOppgave1August.Models.Entities.Product>
+﻿@using ObligatoriskOppgave1August.Models.Entities
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<ObligatoriskOppgave1August.Models.Entities.Product>
 
 
 <!DOCTYPE html>
@@ -34,30 +36,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (Product p in Model) 
+    { 
+        string description = p?.Description ?? ""; 
+        decimal? price = p?.Price ?? 0; 
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+            <td>@p.ProductId</td>
+            <td>@p.Name</td>
+            <td>@description</td>
+            <td>@price</td>
+            <td>@p.Category.Name</td>
+            <td>@p.Manufacturer.Name</td>
+            <td><a asp-controller="Product" asp-action="Update" asp-route-id="@p.ProductId" class="btn btn-primary mx-2"> Edit</a></td>
+            <td><a asp-controller="Product" asp-action="Remove" asp-route-id="@p.ProductId" class="btn btn-primary mx-2"> Delete</a></td>
+        </tr> 
+    }
     </tbody>
 </table>
 </body>

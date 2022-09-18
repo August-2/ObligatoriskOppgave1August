@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using ObligatoriskOppgave1August.Data;
 using ObligatoriskOppgave1August.Models;
@@ -6,9 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// Add CookieTempDataProvider after AddMvc and include ViewFeatures. 
+// using Microsoft.AspNetCore.Mvc.ViewFeatures;  
+builder.Services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))); 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+   
+
+
 
 var app = builder.Build();
 
@@ -30,5 +37,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Product}/{action=Index}/{id?}");
+
 
 app.Run();
